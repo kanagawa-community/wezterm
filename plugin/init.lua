@@ -16,7 +16,12 @@ local function bootstrap(refresh)
   for _, p in ipairs(plugins) do
     if
       (module_name and p.component == module_name)
-      or (not module_name and p.url:find("kanagawa.wz", 1, true))
+      or (
+        not module_name
+        and (
+          p.url:find("kanagawa.wz", 1, true) or p.url:find("kanagawa-community/wezterm", 1, true)
+        )
+      )
     then
       local base = p.plugin_dir .. sep .. "plugin" .. sep
       local entries = {
@@ -34,7 +39,7 @@ local function bootstrap(refresh)
   if not refresh then
     return bootstrap(true)
   end
-  error "Installed plugin not found: kanagawa.wz"
+  error "Installed plugin not found: kanagawa-community/wezterm"
 end
 
 bootstrap()

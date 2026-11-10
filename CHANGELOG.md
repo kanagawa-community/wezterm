@@ -1,11 +1,17 @@
 # Changelog
+
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
-- - -
+---
+
 ## [1.0.3](https://github.com/sravioli/kanagawa.wz/compare/cc1dbc9650e3a1ddadac9c86496afe9d3c6592ea..1.0.3) - 2026-05-14
+
 #### Features
+
 - (**api**) add registration and appearance helpers - ([ce8d83a](https://github.com/sravioli/kanagawa.wz/commit/ce8d83a7579f86ba2506d9dc7dda77472c9f023a)) - sravioli
+
 #### Documentation
+
 - (**github**) add pull request templates - ([fe20788](https://github.com/sravioli/kanagawa.wz/commit/fe20788b686b95cb3a5e429a3955c3b5e1076b47)) - sravioli
 - (**github**) polish issue templates - ([ba8a362](https://github.com/sravioli/kanagawa.wz/commit/ba8a36279e0e8f17078e89862960c7419770e611)) - sravioli
 - (**lua**) polish comment wording - ([07068b9](https://github.com/sravioli/kanagawa.wz/commit/07068b9783681ae0672d365088531acd6d15477f)) - sravioli
@@ -13,62 +19,88 @@ All notable changes to this project will be documented in this file. See [conven
 - (**readme**) improve readme consistency - ([34693db](https://github.com/sravioli/kanagawa.wz/commit/34693db4f8bb1af44a33f169807d874c6641f536)) - sravioli
 - (**readme**) improve readme clarity - ([cc1dbc9](https://github.com/sravioli/kanagawa.wz/commit/cc1dbc9650e3a1ddadac9c86496afe9d3c6592ea)) - sravioli
 
-- - -
+---
 
 ## [1.0.2](https://github.com/sravioli/kanagawa.wz/compare/2214a00dda5d261736903476d5f8dfc218bc8624..1.0.2) - 2026-04-10
+
 #### Features
+
 - streamline configuration files - ([2214a00](https://github.com/sravioli/kanagawa.wz/commit/2214a00dda5d261736903476d5f8dfc218bc8624)) - sravioli
+
 #### Documentation
+
 - update README with type annotations and additional badge - ([97524d9](https://github.com/sravioli/kanagawa.wz/commit/97524d98042e6fad73c27fa734f108d1a94f3245)) - sravioli
 
-- - -
+---
 
 ## [1.0.1](https://github.com/sravioli/kanagawa.wz/compare/2214a00dda5d261736903476d5f8dfc218bc8624..1.0.1) - 2026-04-10
+
 #### Features
+
 - streamline configuration files - ([2214a00](https://github.com/sravioli/kanagawa.wz/commit/2214a00dda5d261736903476d5f8dfc218bc8624)) - sravioli
+
 #### Documentation
+
 - update README with type annotations and additional badge - ([97524d9](https://github.com/sravioli/kanagawa.wz/commit/97524d98042e6fad73c27fa734f108d1a94f3245)) - sravioli
 
-- - -
+---
 
 ## [1.0.1](https://github.com/sravioli/kanagawa.wz/compare/2214a00dda5d261736903476d5f8dfc218bc8624..1.0.1) - 2026-04-10
+
 #### Features
+
 - streamline configuration files - ([2214a00](https://github.com/sravioli/kanagawa.wz/commit/2214a00dda5d261736903476d5f8dfc218bc8624)) - sravioli
+
 #### Documentation
+
 - update README with type annotations and additional badge - ([97524d9](https://github.com/sravioli/kanagawa.wz/commit/97524d98042e6fad73c27fa734f108d1a94f3245)) - sravioli
 
-- - -
+---
 
 ## [1.0.1](https://github.com/sravioli/kanagawa.wz/compare/2214a00dda5d261736903476d5f8dfc218bc8624..1.0.1) - 2026-04-02
+
 #### Features
+
 - streamline configuration files - ([2214a00](https://github.com/sravioli/kanagawa.wz/commit/2214a00dda5d261736903476d5f8dfc218bc8624)) - sravioli
 
-- - -
+---
 
 ## [1.0.0](https://github.com/sravioli/kanagawa.wz/compare/a176bbb0aed6c303fc03b274c2a7c11d5f736ba1..1.0.0) - 2026-03-21
+
 #### Bug Fixes
+
 - (**cocogitto**) set correct repository name - ([a176bbb](https://github.com/sravioli/kanagawa.wz/commit/a176bbb0aed6c303fc03b274c2a7c11d5f736ba1)) - sravioli
 
-- - -
+---
 
 ## [0.1.0](https://github.com/sravioli/wezterm/compare/01d238a002137b8c5f1b4ae25d5e06bf546ba09d..0.1.0) - 2026-03-19
+
 #### Features
+
 - add kanagawa schemes and api - ([d75c08e](https://github.com/sravioli/wezterm/commit/d75c08e90c66a311c049afd8dcab93598220ee44)) - sravioli
+
 #### Bug Fixes
+
 - (**api**) prevent overwriting user defined colors - ([0bdb530](https://github.com/sravioli/wezterm/commit/0bdb5307a384a4fd6359f57d65196c46b29af005)) - sravioli
 - (**schemes**) add missing colors - ([229a0a5](https://github.com/sravioli/wezterm/commit/229a0a5c73ac237847e2cf03de8ffd8b8c5184f9)) - sravioli
 - apply to config.color_schemes and color_scheme - ([de7e79d](https://github.com/sravioli/wezterm/commit/de7e79d39c401196fe7ca19f5852c3b4b0874e3f)) - sravioli
+
 #### Documentation
+
 - (**readme**) fix kanagawa.nvim name - ([4841b63](https://github.com/sravioli/wezterm/commit/4841b63c472e0275c4ec2e9c49a6930e84c9bea3)) - sravioli
 - (**readme**) add coverage badge - ([a1d445e](https://github.com/sravioli/wezterm/commit/a1d445ea94b62ccd78ba57b77570db7f23d428c6)) - [@sravioli](https://github.com/sravioli)
 - update readme - ([63a459b](https://github.com/sravioli/wezterm/commit/63a459b279256cfe5d44f6ae79186cf57e36a66f)) - sravioli
 - add documentation - ([023d8ef](https://github.com/sravioli/wezterm/commit/023d8ef50593c68babf5e20ef4053ed2a70586eb)) - sravioli
+
 #### Tests
+
 - add more api tests - ([d0c6516](https://github.com/sravioli/wezterm/commit/d0c651669a2cdd860246edd59fb6fb8728531784)) - sravioli
 - add test to cover api - ([8f0590f](https://github.com/sravioli/wezterm/commit/8f0590f1cf03aa6d3ddd81b228a89c9df214a66f)) - sravioli
+
 #### Continuous Integration
+
 - add lint and test jobs - ([b7473af](https://github.com/sravioli/wezterm/commit/b7473afe899d1b932e546db47c05c67bd0f95eea)) - sravioli
 
-- - -
+---
 
 Changelog generated by [cocogitto](https://github.com/cocogitto/cocogitto).
