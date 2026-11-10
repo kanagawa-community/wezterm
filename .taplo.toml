@@ -1,0 +1,3 @@
+# scripts/generate.py writes themes/, and generated.yml checks it against a
+# fresh run, so the formatter leaves it as the generator writes it.
+exclude = ["themes/**"]
