@@ -1,8 +1,6 @@
 std = "lua51"
 
-exclude = [
-  "spec/**",
-]
+exclude = ["spec/**"]
 
 [lints]
 shadowing = "allow"
