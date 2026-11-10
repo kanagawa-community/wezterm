@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 VARIANTS = ["wave", "dragon", "lotus"]
 ANSI = ["black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"]
 
-# WezTerm color -> palette role. A tuple is a {bg, fg} pair of a tab style.
+# WezTerm color -> palette role.
 COLORS = {
     "background": "ui.bg",
     "foreground": "ui.fg",

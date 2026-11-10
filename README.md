@@ -119,9 +119,8 @@ This is the usual entry point. It resolves a scheme (default: `"wave"`), applies
 any overrides, registers the result in `config.color_schemes`, and sets
 `config.color_scheme` to the matching display name.
 
-Because WezTerm's `color_scheme` takes precedence over `colors`, you can
-still use `config.colors` to layer additional per-key tweaks on top of the
-scheme.
+WezTerm applies `config.colors` after `color_scheme`. Thus you can use
+`config.colors` to change some keys of the scheme.
 
 ```lua
 -- use the default wave scheme
@@ -148,7 +147,7 @@ config.colors = {
 | Option      | Type    | Default  | Description                                   |
 | ----------- | ------- | -------- | --------------------------------------------- |
 | `scheme`    | string? | `"wave"` | Scheme name: `"wave"`, `"lotus"`, `"dragon"`. |
-| `overrides` | table?  | `nil`    | Partial table deep-merged into the scheme.    |
+| `overrides` | table?  | `nil`    | Keys to change. They merge into the scheme.   |
 
 Display names registered in `config.color_schemes`:
 
@@ -160,9 +159,8 @@ Display names registered in `config.color_schemes`:
 
 ### register
 
-Use `register()` when you want all Kanagawa variants available in
-`config.color_schemes` without activating one. You can then choose the active
-scheme yourself through `config.color_scheme`.
+`register()` adds all three variants to `config.color_schemes`, but it does not
+select one. Select the scheme with `config.color_scheme`.
 
 ```lua
 kanagawa.register(config)
@@ -170,9 +168,8 @@ kanagawa.register(config)
 config.color_scheme = "Kanagawa Dragon"
 ```
 
-You can apply overrides to every registered scheme, and add per-scheme
-overrides with `scheme_overrides`. Per-scheme overrides win over global
-overrides.
+`overrides` changes keys in each scheme. `scheme_overrides` changes keys in one
+scheme. When both change the same key, `scheme_overrides` is used.
 
 ```lua
 kanagawa.register(config, {
@@ -185,22 +182,22 @@ kanagawa.register(config, {
 })
 ```
 
-| Option             | Type   | Default | Description                                  |
-| ------------------ | ------ | ------- | -------------------------------------------- |
-| `overrides`        | table? | `nil`   | Partial table deep-merged into every scheme. |
-| `scheme_overrides` | table? | `nil`   | Per-scheme overrides keyed by scheme name.   |
+| Option             | Type   | Default | Description                                |
+| ------------------ | ------ | ------- | ------------------------------------------ |
+| `overrides`        | table? | `nil`   | Keys to change in each scheme.             |
+| `scheme_overrides` | table? | `nil`   | Per-scheme overrides keyed by scheme name. |
 
 ### apply_by_appearance
 
-Use `apply_by_appearance()` when you want WezTerm's light/dark appearance to
-select the active Kanagawa variant. By default, light appearances use `lotus`,
-dark appearances use `wave`, and unknown appearances fall back to `wave`.
+`apply_by_appearance()` selects the variant from the light or dark appearance
+of WezTerm. By default, a light appearance uses `lotus`, a dark appearance uses
+`wave`, and an unknown appearance uses `wave`.
 
 ```lua
 kanagawa.apply_by_appearance(config)
 ```
 
-You can choose different schemes and provide role-based overrides:
+You can select other schemes, and change keys for each appearance:
 
 ```lua
 kanagawa.apply_by_appearance(config, {
@@ -221,9 +218,9 @@ kanagawa.apply_by_appearance(config, {
 })
 ```
 
-For tests or explicit selection, pass an `appearance` string. Strings
-containing `"light"` select the light role; strings containing `"dark"` select
-the dark role; anything else uses fallback.
+To select the appearance yourself, for example in tests, give an `appearance`
+string. A string that contains `"light"` selects `light`. A string that
+contains `"dark"` selects `dark`. Other strings select `fallback`.
 
 ```lua
 kanagawa.apply_by_appearance(config, {
@@ -237,13 +234,12 @@ kanagawa.apply_by_appearance(config, {
 | `light`      | string? | `"lotus"` | Scheme used for light appearances.                       |
 | `fallback`   | string? | `"wave"`  | Scheme used when appearance cannot be resolved.          |
 | `overrides`  | table?  | `nil`     | Role-based overrides keyed by `dark`/`light`/`fallback`. |
-| `appearance` | string? | `nil`     | Explicit appearance string, mostly useful in tests.      |
+| `appearance` | string? | `nil`     | The appearance to use, for example in tests.             |
 
 ### get
 
-Returns a new scheme table every time. You can modify the result without
-changing the shared presets. When you pass overrides, they are deep-merged into
-that copy.
+`get()` gives a new scheme table each time. You can change the result, and the
+shared presets do not change. The overrides merge into that new table.
 
 ```lua
 -- get a clean copy of the dragon scheme
@@ -264,8 +260,9 @@ config.colors = colors
 
 ### Direct preset access
 
-The base preset tables are also exported directly for quick read access. They
-are shared references, so avoid mutating them. Use `get()` when you need a copy.
+The plugin also exports the base preset tables, so you can read them. All users
+of the plugin share these tables, so do not change them. To get a copy, use
+`get()`.
 
 ```lua
 config.colors = kanagawa.wave
@@ -275,22 +272,21 @@ config.colors = kanagawa.dragon
 
 ## Override semantics
 
-Overrides use a deep merge:
+Overrides merge into the scheme as follows:
 
-- Nested tables (e.g. `tab_bar`, `active_tab`) are merged recursively.
-  You only need to specify the keys you want to change.
-- Array-like tables (`ansi`, `brights`) support partial index overrides.
-  For example `{ ansi = { [3] = "#00ff00" } }` replaces only the third
-  ANSI color; the remaining seven are preserved.
-- Unknown keys are passed through to WezTerm without validation.
+- Nested tables, such as `tab_bar` and `active_tab`, merge at each level.
+  Give only the keys that you change.
+- In the list tables `ansi` and `brights`, you can change one index. For
+  example, `{ ansi = { [3] = "#00ff00" } }` replaces only the third ANSI
+  color. The other seven colors do not change.
+- The plugin gives unknown keys to WezTerm and does not check them.
 
-`get()`, `register()`, `apply_to_config()`, and `apply_by_appearance()` never
-mutate the base preset tables.
+`get()`, `register()`, `apply_to_config()`, and `apply_by_appearance()` do not
+change the base preset tables.
 
-> **How `apply_to_config` interacts with WezTerm's precedence**
-> The plugin registers the resolved scheme in `config.color_schemes` and sets
-> `config.color_scheme`. WezTerm evaluates `color_scheme` first and applies
-> `colors` afterward, so any keys in `config.colors` override the scheme.
+`apply_to_config()` adds the scheme to `config.color_schemes` and sets
+`config.color_scheme`. WezTerm applies `color_scheme` first and `colors` after
+it. Thus a key in `config.colors` replaces the same key of the scheme.
 
 ## API
 

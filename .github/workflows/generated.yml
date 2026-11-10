@@ -7,8 +7,8 @@ permissions:
   contents: read
 
 jobs:
-  # Fails when committed theme files differ from what scripts/generate.py writes from the
-  # shared palette. Theme files are the only output.
+  # Fails when the committed schemes differ from what scripts/generate.py writes from the
+  # shared palette: the plugin's Lua schemes and the TOML schemes in themes/.
   check:
     runs-on: ubuntu-latest
     steps:
