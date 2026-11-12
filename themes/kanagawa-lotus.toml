@@ -1,0 +1,61 @@
+[metadata]
+name = "Kanagawa Lotus"
+author = "Kanagawa Community"
+origin_url = "https://github.com/kanagawa-community/wezterm"
+
+[colors]
+background = "#f2ecbc"
+foreground = "#545464"
+cursor_bg = "#43436c"
+cursor_fg = "#f2ecbc"
+cursor_border = "#43436c"
+selection_fg = "#545464"
+selection_bg = "#c9cbd1"
+scrollbar_thumb = "#e4d794"
+split = "#a09cac"
+compose_cursor = "#766b90"
+visual_bell = "#e7dba0"
+ansi = ["#1f1f28", "#c84053", "#6f894e", "#77713f", "#4d699b", "#b35b79", "#597b75", "#545464"]
+brights = ["#8a8980", "#d7474b", "#6e915f", "#836f4a", "#6693bf", "#624c83", "#5e857a", "#43436c"]
+copy_mode_active_highlight_bg = { Color = "#c9cbd1" }
+copy_mode_active_highlight_fg = { Color = "#545464" }
+copy_mode_inactive_highlight_bg = { Color = "#b5cbd2" }
+copy_mode_inactive_highlight_fg = { Color = "#545464" }
+quick_select_label_bg = { Color = "#e98a00" }
+quick_select_label_fg = { Color = "#1f1f28" }
+quick_select_match_bg = { Color = "#b5cbd2" }
+quick_select_match_fg = { Color = "#545464" }
+input_selector_label_bg = { Color = "#e4d794" }
+input_selector_label_fg = { Color = "#545464" }
+launcher_label_bg = { Color = "#e4d794" }
+launcher_label_fg = { Color = "#545464" }
+
+[colors.indexed]
+16 = "#e98a00"
+17 = "#e82424"
+
+[colors.tab_bar]
+background = "#d5cea3"
+inactive_tab_edge = "#a09cac"
+
+[colors.tab_bar.active_tab]
+bg_color = "#e4d794"
+fg_color = "#545464"
+
+[colors.tab_bar.inactive_tab]
+bg_color = "#d5cea3"
+fg_color = "#43436c"
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = "#e7dba0"
+fg_color = "#545464"
+italic = true
+
+[colors.tab_bar.new_tab]
+bg_color = "#d5cea3"
+fg_color = "#43436c"
+
+[colors.tab_bar.new_tab_hover]
+bg_color = "#e7dba0"
+fg_color = "#545464"
+italic = true
