@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1](https://github.com/kanagawa-community/wezterm/compare/1.1.0..1.1.1) - 2026-11-15
+
+### Performance Improvements
+
+- (**bootstrap**) keep plugin list across reloads (#4) - ([035c105](https://github.com/kanagawa-community/wezterm/commit/035c1052b0a32c7b5a849041d0a3d92621e71d79)) - [@sravioli](https://github.com/sravioli)
+- (**bootstrap**) keep plugin list across reloads - ([92225b1](https://github.com/kanagawa-community/wezterm/commit/92225b105c20fc5bb21eda86de523755410c9700)) - [@sravioli](https://github.com/sravioli)
+
+---
+
 ## [1.1.0](https://github.com/kanagawa-community/wezterm/compare/1.0.3..1.1.0) - 2026-11-12
 
 ### Features
