@@ -287,12 +287,27 @@ describe("apply_to_config", function()
     assert.equal(api.lotus.foreground, config.color_schemes["Kanagawa Lotus"].foreground)
   end)
 
-  it("does not touch config.colors", function()
+  it("only adds tab_bar to config.colors", function()
     local config = { colors = { custom_key = "#abcdef" } }
     api.apply_to_config(config, { scheme = "wave" })
-    -- colors stays as the user left it
+    -- colors keeps the user's keys; the scheme supplies the rest
     assert.equal("#abcdef", config.colors.custom_key)
     assert.is_nil(config.colors.background)
+    assert.is_true(deep_equal(api.wave.tab_bar, config.colors.tab_bar))
+  end)
+
+  it("lets the user's config.colors.tab_bar keys win", function()
+    local config = { colors = { tab_bar = { active_tab = { bg_color = "#111111" } } } }
+    api.apply_to_config(config, { scheme = "wave" })
+    assert.equal("#111111", config.colors.tab_bar.active_tab.bg_color)
+    assert.equal(api.wave.tab_bar.active_tab.fg_color, config.colors.tab_bar.active_tab.fg_color)
+    assert.equal(api.wave.tab_bar.background, config.colors.tab_bar.background)
+  end)
+
+  it("does not touch config.colors with fancy = false", function()
+    local config = { colors = { custom_key = "#abcdef" } }
+    api.apply_to_config(config, { fancy = false })
+    assert.is_nil(config.colors.tab_bar)
   end)
 
   it("preserves pre-existing color_schemes entries", function()
@@ -309,6 +324,37 @@ describe("apply_to_config", function()
     assert.has_error(function()
       api.apply_to_config({}, { scheme = "nope" })
     end)
+  end)
+
+  it("colors the fancy tab bar's titlebar from the scheme", function()
+    local config = { window_frame = { font_size = 11 } }
+    api.apply_to_config(config, { scheme = "dragon" })
+    local frame = config.window_frame
+    assert.equal(api.dragon.tab_bar.background, frame.active_titlebar_bg)
+    assert.equal(api.dragon.tab_bar.background, frame.inactive_titlebar_bg)
+    assert.equal(api.dragon.foreground, frame.active_titlebar_fg)
+    assert.equal(11, frame.font_size) -- the user's keys are kept
+  end)
+
+  it("follows overrides in the titlebar colors", function()
+    local config = {}
+    api.apply_to_config(config, { overrides = { tab_bar = { background = "#010203" } } })
+    assert.equal("#010203", config.window_frame.active_titlebar_bg)
+  end)
+
+  it("leaves window_frame alone with fancy = false", function()
+    local config = {}
+    api.apply_to_config(config, { fancy = false })
+    assert.is_nil(config.window_frame)
+  end)
+
+  it("sets window_frame through apply_by_appearance", function()
+    local config = {}
+    api.apply_by_appearance(config, { appearance = "Light" })
+    assert.equal(api.lotus.tab_bar.background, config.window_frame.active_titlebar_bg)
+    local skipped = {}
+    api.apply_by_appearance(skipped, { appearance = "Light", fancy = false })
+    assert.is_nil(skipped.window_frame)
   end)
 end)
 
