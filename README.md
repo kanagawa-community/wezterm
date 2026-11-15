@@ -67,10 +67,10 @@ local wezterm = require "wezterm"
 -- from git
 local kanagawa = wezterm.plugin.require "https://github.com/kanagawa-community/wezterm"
 
--- from a local checkout
-local kanagawa = wezterm.plugin.require(
-  "file:///" .. wezterm.config_dir .. "/plugins/wezterm"
-)
+-- from a local checkout, uncommitted changes included
+local root = wezterm.home_dir .. "/path/to/kanagawa.wz/plugin/"
+package.path = root .. "?.lua;" .. root .. "?/init.lua;" .. package.path
+local kanagawa = require "kanagawa.api"
 ```
 
 The old URL, `https://github.com/sravioli/kanagawa.wz`, redirects here and
