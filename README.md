@@ -144,10 +144,40 @@ config.colors = {
 }
 ```
 
-| Option      | Type    | Default  | Description                                   |
-| ----------- | ------- | -------- | --------------------------------------------- |
-| `scheme`    | string? | `"wave"` | Scheme name: `"wave"`, `"lotus"`, `"dragon"`. |
-| `overrides` | table?  | `nil`    | Keys to change. They merge into the scheme.   |
+| Option      | Type     | Default  | Description                                                                 |
+| ----------- | -------- | -------- | --------------------------------------------------------------------------- |
+| `scheme`    | string?  | `"wave"` | Scheme name: `"wave"`, `"lotus"`, `"dragon"`.                               |
+| `overrides` | table?   | `nil`    | Keys to change. They merge into the scheme.                                 |
+| `fancy`     | boolean? | `true`   | Color the fancy tab bar: `config.window_frame` and `config.colors.tab_bar`. |
+
+The fancy tab bar (`use_fancy_tab_bar`, WezTerm's default) reads neither its
+titlebar nor its tab colors from the color scheme: the titlebar comes from
+`config.window_frame` and the tabs from `config.colors.tab_bar`. So
+`apply_to_config` also merges the scheme's titlebar colors
+(`kanagawa.window_frame(scheme)`) into `config.window_frame`, keeping your
+font, and its `tab_bar` into `config.colors.tab_bar`, where your own keys win.
+Pass `fancy = false` to skip both.
+
+### TOML themes and the fancy tab bar
+
+A scheme file cannot set these either. With a theme from `themes/`, set them
+from the loaded scheme:
+
+```lua
+local wezterm = require "wezterm"
+local scheme = wezterm.color.load_scheme "/path/to/kanagawa-wave.toml"
+local bar = scheme.tab_bar
+
+config.color_scheme_dirs = { "/path/to/themes" }
+config.color_scheme = "Kanagawa Wave"
+config.colors = { tab_bar = bar }
+config.window_frame = {
+  active_titlebar_bg = bar.background,
+  inactive_titlebar_bg = bar.background,
+  active_titlebar_fg = scheme.foreground,
+  inactive_titlebar_fg = bar.inactive_tab.fg_color,
+}
+```
 
 Display names registered in `config.color_schemes`:
 
@@ -286,19 +316,22 @@ change the base preset tables.
 
 `apply_to_config()` adds the scheme to `config.color_schemes` and sets
 `config.color_scheme`. WezTerm applies `color_scheme` first and `colors` after
-it. Thus a key in `config.colors` replaces the same key of the scheme.
+it. Thus a key in `config.colors` replaces the same key of the scheme. For the
+fancy tab bar it also sets `config.window_frame` and `config.colors.tab_bar`;
+see `fancy` above.
 
 ## API
 
-| Export                                     | Description                                             |
-| ------------------------------------------ | ------------------------------------------------------- |
-| `kanagawa.wave`                            | Base Wave preset (shared reference).                    |
-| `kanagawa.lotus`                           | Base Lotus preset (shared reference).                   |
-| `kanagawa.dragon`                          | Base Dragon preset (shared reference).                  |
-| `kanagawa.get(name, overrides?)`           | Return a fresh scheme table with optional overrides.    |
-| `kanagawa.register(cfg, opts?)`            | Register all schemes without activating one.            |
-| `kanagawa.apply_to_config(cfg, opts?)`     | Register scheme in `cfg.color_schemes` and activate it. |
-| `kanagawa.apply_by_appearance(cfg, opts?)` | Activate a light/dark scheme based on appearance.       |
+| Export                                     | Description                                              |
+| ------------------------------------------ | -------------------------------------------------------- |
+| `kanagawa.wave`                            | Base Wave preset (shared reference).                     |
+| `kanagawa.lotus`                           | Base Lotus preset (shared reference).                    |
+| `kanagawa.dragon`                          | Base Dragon preset (shared reference).                   |
+| `kanagawa.get(name, overrides?)`           | Return a fresh scheme table with optional overrides.     |
+| `kanagawa.register(cfg, opts?)`            | Register all schemes without activating one.             |
+| `kanagawa.apply_to_config(cfg, opts?)`     | Register scheme in `cfg.color_schemes` and activate it.  |
+| `kanagawa.apply_by_appearance(cfg, opts?)` | Activate a light/dark scheme based on appearance.        |
+| `kanagawa.window_frame(scheme)`            | Fancy tab bar titlebar colors for `config.window_frame`. |
 
 ## Palette
 

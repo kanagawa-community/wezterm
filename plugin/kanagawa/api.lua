@@ -61,6 +61,7 @@
 ---@class kanagawa.ApplyOpts
 ---@field scheme? string Scheme name. Defaults to `"wave"`.
 ---@field overrides? kanagawa.Scheme Partial overrides deep-merged into the scheme.
+---@field fancy? boolean Color the fancy tab bar (`config.window_frame`, `config.colors.tab_bar`). Defaults to `true`.
 
 ---Options accepted by `register`.
 ---@class kanagawa.RegisterOpts
@@ -80,6 +81,7 @@
 ---@field fallback? string Scheme name used when appearance is unknown. Defaults to `"wave"`.
 ---@field overrides? kanagawa.AppearanceOverrides Role-based overrides.
 ---@field appearance? string Explicit appearance string for testing or manual selection.
+---@field fancy? boolean Passed to `apply_to_config`. Defaults to `true`.
 
 ---@alias kanagawa.SchemeName "wave"|"lotus"|"dragon"
 
@@ -270,6 +272,33 @@ function M.get(name, overrides)
 end
 
 -- ---------------------------------------------------------------------------
+-- Public: window_frame(scheme)
+-- ---------------------------------------------------------------------------
+
+---Titlebar colors for the fancy tab bar, taken from a scheme's tab bar.
+---WezTerm reads them from `config.window_frame`, which a color scheme cannot
+---set, so `apply_to_config` merges them in.
+---
+---@param scheme kanagawa.Scheme A scheme table, e.g. from `get`.
+---@return table frame Color keys for `config.window_frame`.
+function M.window_frame(scheme)
+  local tab_bar = scheme.tab_bar
+  local bar = tab_bar.background
+  return {
+    active_titlebar_bg = bar,
+    inactive_titlebar_bg = bar,
+    active_titlebar_fg = scheme.foreground,
+    inactive_titlebar_fg = tab_bar.inactive_tab.fg_color,
+    active_titlebar_border_bottom = bar,
+    inactive_titlebar_border_bottom = bar,
+    button_fg = tab_bar.inactive_tab.fg_color,
+    button_bg = bar,
+    button_hover_fg = tab_bar.inactive_tab_hover.fg_color,
+    button_hover_bg = tab_bar.inactive_tab_hover.bg_color,
+  }
+end
+
+-- ---------------------------------------------------------------------------
 -- Public: register(config [, opts])
 -- ---------------------------------------------------------------------------
 
@@ -311,6 +340,11 @@ end
 ---`colors`, so the user can still layer extra per-key tweaks through
 ---`config.colors` and they will act as overrides on top of the scheme.
 ---
+---For the fancy tab bar it also merges the scheme's titlebar colors into
+---`config.window_frame` and its tab colors into `config.colors.tab_bar`
+---(WezTerm's fancy tab bar reads neither from the scheme); pass
+---`fancy = false` to skip that.
+---
 ---@param config table WezTerm config builder.
 ---@param opts? kanagawa.ApplyOpts Options table.
 function M.apply_to_config(config, opts)
@@ -321,6 +355,24 @@ function M.apply_to_config(config, opts)
   config.color_schemes = config.color_schemes or {}
   config.color_schemes[resolved.label] = resolved.scheme
   config.color_scheme = resolved.label
+
+  if opts.fancy ~= false then
+    -- Merge: keep the user's window_frame font and other keys.
+    local frame = config.window_frame or {}
+    for k, v in pairs(M.window_frame(resolved.scheme)) do
+      frame[k] = v
+    end
+    config.window_frame = frame
+    -- The fancy tab bar reads tab colors from config.colors.tab_bar only,
+    -- never from the color scheme. The user's own tab_bar keys win.
+    local colors = config.colors or {}
+    local tab_bar = deep_clone(resolved.scheme.tab_bar)
+    if colors.tab_bar then
+      deep_merge(tab_bar, colors.tab_bar)
+    end
+    colors.tab_bar = tab_bar
+    config.colors = colors
+  end
 end
 
 -- ---------------------------------------------------------------------------
@@ -346,6 +398,7 @@ function M.apply_by_appearance(config, opts)
   M.apply_to_config(config, {
     scheme = scheme,
     overrides = overrides,
+    fancy = opts.fancy,
   })
 end
 
