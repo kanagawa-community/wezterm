@@ -18,6 +18,17 @@ changes are reviewed. This page covers only what is specific to this port.
   [.github repository](https://github.com/kanagawa-community/.github/issues)
   so every port stays in step.
 
+## Reproduce a bug
+
+Copy [`minit.lua`](minit.lua), add your configuration below its marker comment,
+and run it without your own config:
+
+```sh
+wezterm --config-file minit.lua
+```
+
+Paste the edited file into the issue.
+
 ## Colors
 
 Take colors from the shared [palette](https://github.com/kanagawa-community/.github/blob/main/docs/PALETTE.md)
