@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.0](https://github.com/kanagawa-community/wezterm/compare/1.1.1..1.2.0) - 2026-11-15
+
+### Features
+
+- (**api**) color the fancy tab bar (#7) - ([19e32b4](https://github.com/kanagawa-community/wezterm/commit/19e32b459b75a4b10f3c0fc71b6c7a57d364826a)) - [@sravioli](https://github.com/sravioli)
+- (**api**) color the fancy tab bar - ([86ea910](https://github.com/kanagawa-community/wezterm/commit/86ea910eef40d7c5fae5040769ab4ca1d2a2a47e)) - [@sravioli](https://github.com/sravioli)
+
+### Documentation
+
+- (**readme**) align the option and API tables - ([e78006a](https://github.com/kanagawa-community/wezterm/commit/e78006a8fdb2107e4e6925e415df6651ef15cb32)) - [@sravioli](https://github.com/sravioli)
+- document working-tree local checkout setup (#6) - ([f575d8e](https://github.com/kanagawa-community/wezterm/commit/f575d8e44ce8ba86a40b592a6fe7635be476e9dd)) - [@sravioli](https://github.com/sravioli)
+- document working-tree local checkout setup - ([6ba6024](https://github.com/kanagawa-community/wezterm/commit/6ba6024debfd98eacb34959007b59118b4e95865)) - [@sravioli](https://github.com/sravioli)
+
+---
+
 ## [1.1.1](https://github.com/kanagawa-community/wezterm/compare/1.1.0..1.1.1) - 2026-11-15
 
 ### Performance Improvements
