@@ -8,7 +8,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 config="${XDG_CONFIG_HOME:-$HOME/.config}"
 # Print "<file in this repository>\t<folder it goes in>" for one variant.
 items() { printf "themes/kanagawa-%s.toml\t%s\n" "$1" "$config/wezterm/colors"; }
-after() { :; }
 
 uninstall=false
 if [[ "${1:-}" == --uninstall ]]; then
@@ -34,7 +33,5 @@ for v in $selected; do
       cp -R "$src" "$dir/"
     fi
   done < <(items "$v")
-  [[ "$v" == shared ]] && continue
   if [[ "$uninstall" == true ]]; then echo "Removed kanagawa-$v"; else echo "Installed kanagawa-$v"; fi
 done
-after
